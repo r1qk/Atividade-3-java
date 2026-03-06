@@ -1,88 +1,90 @@
-# Atividade da aula 2 de Java
+# Atividade da aula 3 de Java
 Nome: Riquelme Santos da Mata  
 Turma: CCPH2
 
-## Documentação da atividade realizada na aula 2
-A atividade é uma amostra de como criar e utilizar métodos em programação orientada a objetos.  
-### Arquivo model
+## Documentação da atividade realizada na aula 3
+A atividade é uma continuação da atividade 2, onde precisamos implementar encapsulamento utilizando métodos padronizados (get e set).  
 
+### Arquivo model
 O código model é um modelo da classe Cachorro, com três atributos: nome, idade e peso. A seguir, 
-criamos um construtor de classe que executa quando se instancia a classe e, geralmente, usamos para atribuir valores.
+criamos um construtor de classe que executa quando se instancia a classe e, geralmente, usamos para atribuir valores. 
+Aqui definimos os atributos como privados para não serem alterados facilmente pelo usuário, garantindo mais
+segurança ao código.
 
 ```
 package br.com.atividade2.model; 
 
-"""
+//Classe
 public class Cachorro {
-  // Atributos
-  public String nome;
-  public int idade;
-  public double peso;
-
-  public Cachorro(String nome, int idade, double peso) {
-    this.nome = nome;
-    this.idade = idade;
-    this.peso = 0.0;
-  }
+    
+    // Atributos
+    
+    private String nome;
+    private int idade;
+    private double peso;
+    
+    public Cachorro(String nome, int idade, double peso) {
+    	this.setNome(nome);
+    	this.setIdade(idade);
+    	this.setPeso(peso);
+    }
 ```
-Usamos um método para definir uma função. Nesse caso, a primeira função é envelhecer, onde o usuário digita quantos anos ele quer adicionar 
-ao cachorro e uma nova idade é gerada, somando a nova idade e a idadde antiga definida no parâmetro de quando o objeto foi criado. Também foi utilizado
-a condicional if para restringir o que o usuário pode digitar. É impossível rejuvenescer (literalmente) com o passar dos anos. 
+Usamos um método para definir uma função. Nesse projeto, as funções "envelhecer" e "trocarNome" permanecem, porém são adicionados
+seis métodos, três deles para set e três para get. As funções set servem para que os atributos sejam alterados de forma segura,
+assim o usuário não consegue alterar esses atributos de um objeto como bem entender. Os métodos get são usados para retornar
+esses atributos e exibí-los no arquivo main.
 
 O outro método criado foi o trocarNome. Se o usuário digita um novo nome, o Cachorro tem o seu nome alterado. Também usamos conficional para restringir
 essa mudança, como por exemplo: um cachorro não pode passar a ter um nome vazio.
 Essa exibição funciona utilizando o if else para definir
 a faixa etária do animal. Ambos os métodos mencionados utilizam condicionais para fazer uma validação e alteram um dos atributos definidos pelo usuário.
 ```
-public void envelhecer (int anos) {
-    if (anos < 0) {
-        System.out.println("Impossível :/");
-        return;
-    }
-    if (anos == 0) {
-        System.out.println("Não envelheceu :D");
-        return;
+    private void setNome(String nome) {
+        this.nome = nome;
     }
 
-    if (this.idade + anos > 30) {
-        System.out.println("Idade máxima atingida :(");
-        return;
+    private void setIdade(int idade) {
+        if (idade >= 0 && 30 >= idade) {
+            this.idade = idade;
+        } else {
+            System.out.println("Erro: idade inválida!");
+        }
     }
 
-    this.idade += anos;
-    String mensagem = String.format("Seu animal agora tem %d anos! ", idade); 
-    System.out.println(mensagem);
-    return;
-}
-
-public void trocarNome (String novo_nome) {
-    if (novo_nome == null) {
-        System.out.println("Nenhum nome foi digitado :(");
-        return;
+    private void setPeso(double peso) {
+        if (peso <= 100) {
+            this.peso = peso;
+        } else {
+            System.out.println("Peso impossível.");
+        }
     }
 
-    if (novo_nome.length() == 1) {
-        System.out.println("Digite um nome com mais letras!");
-        return;
+    // get
+    public String getNome() {
+        return this.nome;
     }
 
-    this.nome = novo_nome;
-    String mensagem2 = String.format("Nome alterado para %s! ", this.nome); 
-    System.out.println(mensagem2);
-    return;
+    public int getIdade() {
+        return this.idade;
+    }
+
+    public double getPeso() {
+        return this.peso;
+    }
 ```
 ### Arquivo main
-No arquivo main, é onde o código funciona. Chamamos a classe a seus métodos, utilizamos a cláusula new para criar um objeto e 
-fornecer parâmetros aos seus atributos. Ao chamarmos os métodos, podemos utilizar valores para modificar a idade e o nome do cachorro, 
-mas se o valor for inválido ou improvável, a mudança não ocorre. No final, apenas exibimos as informações de cada um dos objetos criados, 
-ou seja, os cachorros.
+No arquivo main, é onde o código funciona. Dessa vez, utilizamos as funções get para exibir o atributo para 
+o usuário, e caso o usuário tente alterar esse atributo manualmente, será exibido um erro dizendo que 
+não é possível visualizar esse atributo.
 ```
-    Cachorro cachorro1 = new Cachorro("Mike", 10, 15);
-    System.out.println("Animal 1");
-    cachorro1.exibirFaixaEtaria(10);
-    
+// Exibindo os dados no Console
+System.out.println("--- Exibindo cachorros ---");
+System.out.println("Cachorro: " + cachorro1.getNome() + " | Idade: " + cachorro1.getIdade() + " | Peso: " + cachorro1.getPeso());
+System.out.println("Cachorro: " + cachorro2.getNome() + " | Idade: " + cachorro2.getIdade() + " | Peso: " + cachorro2.getPeso());  
+        
+// Tentando mudar o atributo
+cachorro2.nome = "Luke";
+```
+### Erro 
+<img width="971" height="99" alt="image" src="https://github.com/user-attachments/assets/2ff6009e-4a09-4baf-bde2-8018e1de04b0" />
 
-    Cachorro cachorro2 = new Cachorro("Bob", 2, 5);
-    System.out.println("Animal 2");
-    cachorro1.exibirFaixaEtaria(2);
-```
